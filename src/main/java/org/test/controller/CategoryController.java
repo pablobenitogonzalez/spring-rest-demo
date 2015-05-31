@@ -10,7 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.test.domain.Category;
 import org.test.service.CategoryService;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,13 +41,30 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+                    consumes = MediaType.APPLICATION_JSON_VALUE,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryBean> createCategory(@RequestBody CategoryBean categoryBean, UriComponentsBuilder uriComponentsBuilder) {
         Category category = categoryService.createCategory(new Category(categoryBean.name));
         CategoryBean categoryBeanCreated = new CategoryBean(category);
         HttpHeaders httpHeaders = RestUtilities.getHttpHeaders(uriComponentsBuilder, RestPaths.PATH_CATEGORIES, String.valueOf(categoryBeanCreated.id));
         return new ResponseEntity<>(categoryBeanCreated, httpHeaders, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT,
+                    consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCategory(@RequestBody CategoryBean categoryBean) {
+        Category category = new Category();
+        category.setId(categoryBean.id);
+        category.setName(categoryBean.name);
+        categoryService.updateCategory(category);
+    }
+
+    @RequestMapping(value = "/{id}",
+                    method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
     }
 
 }

@@ -36,10 +36,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public void updateCategory(@NotNull @Valid Category category) {
-
+        Category oldCategory = this.getCategory(category.getId());
+        if(oldCategory.getName() != category.getName() && categoryRepository.findByName(category.getName()) != null)
+            throw new DuplicateKeyException("name");
+        categoryRepository.save(category);
     }
 
     public void deleteCategory(@NotNull Long id) {
-
+        Category category = this.getCategory(id);
+        categoryRepository.delete(category);
     }
 }

@@ -22,9 +22,9 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
     public ErrorMessageBean handleException(Exception e) {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", e.getMessage());
+        if(e.getMessage()!= null) error.put("message", e.getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00000", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), errors);
+        return new ErrorMessageBean("00000", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -35,7 +35,7 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         Map<String, String> error = new LinkedHashMap<>();
         error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.not.found", null, Locale.getDefault()));
         errors.add(error);
-        return new ErrorMessageBean("00001", HttpStatus.NOT_FOUND.getReasonPhrase(), errors);
+        return new ErrorMessageBean("00001", HttpStatus.NOT_FOUND.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
@@ -45,9 +45,9 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
         error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.duplicate.key", null, Locale.getDefault()));
-        error.put("property", e.getMessage());
+        if(e.getMessage()!= null) error.put("properties", e.getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00002", HttpStatus.BAD_REQUEST.getReasonPhrase(), errors);
+        return new ErrorMessageBean("00002", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -62,7 +62,18 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
             error.put("violation", constraint.getMessage());
             errors.add(error);
         }
-        return new ErrorMessageBean("00003", HttpStatus.BAD_REQUEST.getReasonPhrase(), errors);
+        return new ErrorMessageBean("00003", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorMessageBean handleIllegalArgumentException(IllegalArgumentException e) {
+        List<Map<String, String>> errors = new ArrayList<>();
+        Map<String, String> error = new LinkedHashMap<>();
+        if(e.getMessage()!= null) error.put("message", e.getMessage());
+        errors.add(error);
+        return new ErrorMessageBean("00005", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
 }
