@@ -12,6 +12,6 @@ public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> 
     @Query("select s from Subcategory s order by s.name")
     List<Subcategory> findAllOrderByName();
 
-    Subcategory findByName(String name);
+    Subcategory findByNameAndCategory_Id(String name, Long id);
 
 }

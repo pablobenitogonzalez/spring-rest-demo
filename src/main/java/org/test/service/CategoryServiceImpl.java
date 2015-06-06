@@ -1,6 +1,7 @@
 package org.test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category getCategory(@NotNull Long id) {
+    public Category getCategory(Long id) {
+        if(id == null) throw new IllegalArgumentException("category id null");
         Category category = categoryRepository.findOne(id);
         if(category == null) throw new ResourceNotFoundException();
         return category;
@@ -37,13 +39,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     public void updateCategory(@NotNull @Valid Category category) {
         Category oldCategory = this.getCategory(category.getId());
-        if(oldCategory.getName() != category.getName() && categoryRepository.findByName(category.getName()) != null)
+        if(!oldCategory.getName().equals(category.getName()) && categoryRepository.findByName(category.getName()) != null)
             throw new DuplicateKeyException("name");
         categoryRepository.save(category);
     }
 
-    public void deleteCategory(@NotNull Long id) {
+    public void deleteCategory(Long id) {
+        if(id == null) throw new IllegalArgumentException("category id null");
         Category category = this.getCategory(id);
+        if(category.getSubcategories().size() > 0) throw new DataIntegrityViolationException("subcategories");
         categoryRepository.delete(category);
     }
 }
