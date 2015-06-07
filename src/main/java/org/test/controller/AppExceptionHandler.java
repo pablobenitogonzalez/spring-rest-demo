@@ -24,9 +24,10 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
     public ErrorMessageBean handleException(Exception e) {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
-        if(e.getMessage()!= null) error.put("message", e.getMessage());
+        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.internal.server.error", null, Locale.getDefault()));
+        if(e.getCause()!= null) error.put("info", e.getCause().getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00000", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("000", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -36,9 +37,9 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
         error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.parse.json", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("cause", e.getMessage());
+        if(e.getCause()!= null) error.put("info", e.getCause().getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00001", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("001", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -48,8 +49,9 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
         error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.not.found", null, Locale.getDefault()));
+        if(e.getMessage()!= null) error.put("info", e.getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00002", HttpStatus.NOT_FOUND.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("002", HttpStatus.NOT_FOUND.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
@@ -59,9 +61,9 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
         error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.duplicate.key", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("properties", e.getMessage());
+        if(e.getMessage()!= null) error.put("info", e.getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00003", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("003", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -72,11 +74,10 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         for(ConstraintViolation<?> constraint : e.getConstraintViolations()) {
             Map<String, String> error = new LinkedHashMap<>();
             error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.constraint.violation", null, Locale.getDefault()));
-            error.put("property", constraint.getPropertyPath().toString());
-            error.put("violation", constraint.getMessage());
+            error.put("info", constraint.getPropertyPath().toString()+ " >>> " + constraint.getMessage());
             errors.add(error);
         }
-        return new ErrorMessageBean("00004", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("004", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -85,9 +86,10 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
     public ErrorMessageBean handleIllegalArgumentException(IllegalArgumentException e) {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
-        if(e.getMessage()!= null) error.put("message", e.getMessage());
+        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.illegal.argument", null, Locale.getDefault()));
+        if(e.getMessage()!= null) error.put("info", e.getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00005", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("005", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -97,9 +99,9 @@ public class AppExceptionHandler extends AbstractExceptionHandler {
         List<Map<String, String>> errors = new ArrayList<>();
         Map<String, String> error = new LinkedHashMap<>();
         error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.data.integrity.violation", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("cause", e.getMessage());
+        if(e.getMessage()!= null) error.put("info", e.getMessage());
         errors.add(error);
-        return new ErrorMessageBean("00006", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorMessageBean("006", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
     }
 
 }
