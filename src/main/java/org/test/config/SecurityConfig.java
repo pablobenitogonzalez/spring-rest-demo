@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
+    /*
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // to customize with your own authentication provider
@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 
      * <p>Could be inject into beans of scope singleton (ie. @Service or @Controler)      
      */
+
+    /*
     @Bean
     @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
     public UserDetails authenticatedUserDetails() {
@@ -71,4 +73,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
        return null;
     }
+    */
 }

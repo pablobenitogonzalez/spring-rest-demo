@@ -24,13 +24,18 @@
           <file>file://$MODULE_DIR$/src/main/java/org/test/config/MainConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/org/test/config/WebConfig.java</file>
         </fileset>
+        <fileset id="fileset2" name="Spring Application Context Web" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/org/test/config/WebMvcConfig.java</file>
+        </fileset>
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="3c06d2d6-e1da-4826-b144-60d515bf5d3b" />
+        </datasource-mapping>
       </configuration>
     </facet>
   </component>

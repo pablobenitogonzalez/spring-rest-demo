@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = DomainStr.SUBCATEGORY)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name", "category" }))
 @SuppressWarnings(DomainStr.UNUSED)
 public class Subcategory extends Domain {
 
@@ -17,7 +17,6 @@ public class Subcategory extends Domain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = DomainStr.ID, columnDefinition = DomainStr.BIGINT$10$_UNSIGNED, unique = true, nullable = false)
     private Long id;
     public Long getId() {
         return this.id;
@@ -28,7 +27,6 @@ public class Subcategory extends Domain {
 
     @NotNull
     @Size(min=1, max=100)
-    @Column(name = DomainStr.NAME, columnDefinition = DomainStr.VARCHAR$100$, nullable = false)
     private String name;
     public String getName() {
         return this.name;
@@ -50,7 +48,6 @@ public class Subcategory extends Domain {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = DomainStr.CATEGORY, nullable = false)
 	private Category category;
     public Category getCategory() {
         return this.category;

@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = DomainStr.CATEGORY)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name" }))
 @SuppressWarnings(DomainStr.UNUSED)
 public class Category extends Domain {
 
@@ -19,7 +19,6 @@ public class Category extends Domain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = DomainStr.ID, columnDefinition = DomainStr.BIGINT$10$_UNSIGNED, unique = true, nullable = false)
 	private Long id;
     public Long getId() {
         return id;
@@ -30,7 +29,6 @@ public class Category extends Domain {
 
     @NotNull
     @Size(min=5, max=100)
-    @Column(name = DomainStr.NAME, columnDefinition = DomainStr.VARCHAR$100$, unique = true, nullable = false)
 	private String name;
     public String getName() {
         return this.name;

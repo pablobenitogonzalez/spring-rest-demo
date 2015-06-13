@@ -67,12 +67,13 @@ public class InfrastructureConfig {
     }
 
     private Map<String, Object> additionalProperties() {
-        Map<String, Object> properties = new HashMap<String, Object>();
+        Map<String, Object> properties = new HashMap<>();
         properties.put("hibernate.validator.apply_to_ddl", "false");
         properties.put("hibernate.validator.autoregister_listeners", "false");
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         properties.put("hibernate.generate_statistics", env.getProperty("hibernate.generate_statistics"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.ejb.naming_strategy", env.getProperty("hibernate.ejb.naming_strategy"));
         // Second level cache configuration and so on.
         return properties;
     }

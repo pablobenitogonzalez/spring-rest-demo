@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
         InfrastructureConfig.class,
         RepositoryConfig.class,
         ServiceConfig.class,
-        //SecurityConfig.class
+        //StatelessAuthenticationSecurityConfig.class
 } )
 public class MainConfig {
 

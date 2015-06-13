@@ -1,6 +1,5 @@
 package org.test.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -12,8 +11,6 @@ import java.util.Date;
 public class Record {
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = DomainStr.CREATED,	columnDefinition = DomainStr.DATETIME, nullable = false)
     private Date created = new Date();
     public Date getCreated() {
         return created;
@@ -23,8 +20,6 @@ public class Record {
     }
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = DomainStr.LAST_UPDATE,	columnDefinition = DomainStr.DATETIME, nullable = false)
     private Date lastUpdate = new Date();
     public Date getLastUpdate() {
         return lastUpdate;
