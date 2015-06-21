@@ -3,7 +3,7 @@ package org.test.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
-@SuppressWarnings(RestPaths.UNUSED)
+@SuppressWarnings( ApiController.UNUSED)
 public class AbstractExceptionHandler {
 
     @Autowired

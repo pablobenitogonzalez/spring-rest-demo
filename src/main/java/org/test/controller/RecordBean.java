@@ -4,7 +4,7 @@ import org.test.domain.Record;
 
 import java.util.Date;
 
-@SuppressWarnings(RestPaths.UNUSED)
+@SuppressWarnings( ApiController.UNUSED)
 public class RecordBean {
     public Date created;
     public Date last_updated;

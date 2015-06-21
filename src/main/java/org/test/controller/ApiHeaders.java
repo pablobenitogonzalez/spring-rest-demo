@@ -5,9 +5,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-public class RestUtilities {
+public class ApiHeaders {
 
-    public static HttpHeaders getHttpHeaders(UriComponentsBuilder uriComponentsBuilder, String path, String id) {
+    public static HttpHeaders getCreatedResourceHttpHeaders(UriComponentsBuilder uriComponentsBuilder, String path, String id) {
         HttpHeaders httpHeaders = new HttpHeaders();
         URI locationURI = uriComponentsBuilder.path(path).path("/"+id).build().toUri();
         httpHeaders.setLocation((locationURI));

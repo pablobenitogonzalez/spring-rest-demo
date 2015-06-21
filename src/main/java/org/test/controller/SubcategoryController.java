@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(RestPaths.PATH_SUBCATEGORIES)
-@SuppressWarnings(RestPaths.UNUSED)
+@RequestMapping( ApiController.SUBCATEGORIES_URL)
+@SuppressWarnings( ApiController.UNUSED)
 public class SubcategoryController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class SubcategoryController {
         Category category = categoryService.getCategory(subcategoryBean.category.id);
         Subcategory subcategory = subcategoryService.createSubcategory(new Subcategory(subcategoryBean.name, category));
         SubcategoryBean subcategoryBeanCreated = new SubcategoryBean(subcategory);
-        HttpHeaders httpHeaders = RestUtilities.getHttpHeaders(uriComponentsBuilder, RestPaths.PATH_SUBCATEGORIES, String.valueOf(subcategoryBeanCreated.id));
+        HttpHeaders httpHeaders = ApiHeaders.getCreatedResourceHttpHeaders(uriComponentsBuilder, ApiController.SUBCATEGORIES_URL, String.valueOf(subcategoryBeanCreated.id));
         return new ResponseEntity<>(subcategoryBeanCreated, httpHeaders, HttpStatus.CREATED);
     }
 

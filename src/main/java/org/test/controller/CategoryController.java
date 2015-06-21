@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(RestPaths.PATH_CATEGORIES)
-@SuppressWarnings(RestPaths.UNUSED)
+@RequestMapping( ApiController.CATEGORIES_URL)
+@SuppressWarnings( ApiController.UNUSED)
 public class CategoryController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class CategoryController {
     public ResponseEntity<CategoryBean> createCategory(@RequestBody CategoryBean categoryBean, UriComponentsBuilder uriComponentsBuilder) {
         Category category = categoryService.createCategory(new Category(categoryBean.name));
         CategoryBean categoryBeanCreated = new CategoryBean(category);
-        HttpHeaders httpHeaders = RestUtilities.getHttpHeaders(uriComponentsBuilder, RestPaths.PATH_CATEGORIES, String.valueOf(categoryBeanCreated.id));
+        HttpHeaders httpHeaders = ApiHeaders.getCreatedResourceHttpHeaders(uriComponentsBuilder, ApiController.CATEGORIES_URL, String.valueOf(categoryBeanCreated.id));
         return new ResponseEntity<>(categoryBeanCreated, httpHeaders, HttpStatus.CREATED);
     }
 

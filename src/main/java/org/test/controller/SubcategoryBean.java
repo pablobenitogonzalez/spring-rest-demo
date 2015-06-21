@@ -2,7 +2,7 @@ package org.test.controller;
 
 import org.test.domain.Subcategory;
 
-@SuppressWarnings(RestPaths.UNUSED)
+@SuppressWarnings( ApiController.UNUSED)
 public class SubcategoryBean {
 
     public Long id;
@@ -16,11 +16,11 @@ public class SubcategoryBean {
     public SubcategoryBean(Subcategory subcategory) {
         this.id = subcategory.getId();
         this.name = subcategory.getName();
-        this.link = RestPaths.PATH_SUBCATEGORIES+"/"+this.id;
+        this.link = ApiController.SUBCATEGORIES_URL+"/"+this.id;
         this.record = new RecordBean(subcategory.getRecord());
         this.category.id = subcategory.getCategory().getId();
         this.category.name = subcategory.getCategory().getName();
-        this.category.link = RestPaths.PATH_CATEGORIES+"/"+this.category.id;
+        this.category.link = ApiController.CATEGORIES_URL+"/"+this.category.id;
     }
 
     public class Category {

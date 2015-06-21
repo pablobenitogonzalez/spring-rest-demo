@@ -15,93 +15,93 @@ import javax.validation.ConstraintViolationException;
 import java.util.*;
 
 @ControllerAdvice
-@SuppressWarnings(RestPaths.UNUSED)
+@SuppressWarnings( ApiController.UNUSED)
 public class AppExceptionHandler extends AbstractExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorMessageBean handleException(Exception e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.internal.server.error", null, Locale.getDefault()));
-        if(e.getCause()!= null) error.put("info", e.getCause().getMessage());
+    public ErrorBean handleException(Exception e) {
+        List<MessageBean> errors = new ArrayList<>();
+        MessageBean error = new MessageBean();
+        error.message = this.getResourceBundle().getMessage("org.test.demo.message.internal.server.error", null, Locale.getDefault());
+        if(e.getCause()!= null) error.developerMessage = e.getCause().getMessage();
         errors.add(error);
-        return new ErrorMessageBean("000", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.INTERNAL_SERVER_ERROR, "000", errors);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorMessageBean handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.parse.json", null, Locale.getDefault()));
-        if(e.getCause()!= null) error.put("info", e.getCause().getMessage());
+    public ErrorBean handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        List<MessageBean> errors = new ArrayList<>();
+        MessageBean error = new MessageBean();
+        error.message = this.getResourceBundle().getMessage("org.test.demo.message.parse.json", null, Locale.getDefault());
+        if(e.getCause()!= null) error.developerMessage = e.getCause().getMessage();
         errors.add(error);
-        return new ErrorMessageBean("001", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.BAD_REQUEST, "001", errors);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ErrorMessageBean handleResourceNotFoundException(ResourceNotFoundException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.not.found", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("info", e.getMessage());
+    public ErrorBean handleResourceNotFoundException(ResourceNotFoundException e) {
+        List<MessageBean> errors = new ArrayList<>();
+        MessageBean error = new MessageBean();
+        error.message = this.getResourceBundle().getMessage("org.test.demo.message.resource.not.found", null, Locale.getDefault());
+        if(e.getMessage()!= null) error.developerMessage =  e.getMessage();
         errors.add(error);
-        return new ErrorMessageBean("002", HttpStatus.NOT_FOUND.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.NOT_FOUND, "002", errors);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorMessageBean handleDuplicateKeyException(DuplicateKeyException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.duplicate.key", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("info", e.getMessage());
+    public ErrorBean handleDuplicateKeyException(DuplicateKeyException e) {
+        List<MessageBean> errors = new ArrayList<>();
+        MessageBean error = new MessageBean();
+        error.message = this.getResourceBundle().getMessage("org.test.demo.message.resource.duplicate.key", null, Locale.getDefault());
+        if(e.getMessage()!= null) error.developerMessage = e.getMessage();
         errors.add(error);
-        return new ErrorMessageBean("003", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.BAD_REQUEST, "003", errors);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorMessageBean handleConstraintViolationException(ConstraintViolationException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
+    public ErrorBean handleConstraintViolationException(ConstraintViolationException e) {
+        List<MessageBean> errors = new ArrayList<>();
         for(ConstraintViolation<?> constraint : e.getConstraintViolations()) {
-            Map<String, String> error = new LinkedHashMap<>();
-            error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.constraint.violation", null, Locale.getDefault()));
-            error.put("info", constraint.getPropertyPath().toString()+ " >>> " + constraint.getMessage());
+            MessageBean error = new MessageBean();
+            error.message = this.getResourceBundle().getMessage("org.test.demo.message.resource.constraint.violation", null, Locale.getDefault());
+            error.developerMessage = constraint.getPropertyPath().toString()+ " >>> " + constraint.getMessage();
             errors.add(error);
         }
-        return new ErrorMessageBean("004", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.BAD_REQUEST, "004", errors);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorMessageBean handleIllegalArgumentException(IllegalArgumentException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.illegal.argument", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("info", e.getMessage());
+    public ErrorBean handleIllegalArgumentException(IllegalArgumentException e) {
+        List<MessageBean> errors = new ArrayList<>();
+        MessageBean error = new MessageBean();
+        error.message = this.getResourceBundle().getMessage("org.test.demo.message.illegal.argument", null, Locale.getDefault());
+        if(e.getMessage()!= null) error.developerMessage = e.getMessage();
         errors.add(error);
-        return new ErrorMessageBean("005", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.BAD_REQUEST, "005", errors);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorMessageBean handleDataIntegrityViolationException(DataIntegrityViolationException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        Map<String, String> error = new LinkedHashMap<>();
-        error.put("message", this.getResourceBundle().getMessage("org.test.demo.message.resource.data.integrity.violation", null, Locale.getDefault()));
-        if(e.getMessage()!= null) error.put("info", e.getMessage());
+    public ErrorBean handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        List<MessageBean> errors = new ArrayList<>();
+        MessageBean error = new MessageBean();
+        error.message = this.getResourceBundle().getMessage("org.test.demo.message.resource.data.integrity.violation", null, Locale.getDefault());
+        if(e.getMessage()!= null) error.developerMessage = e.getMessage();
         errors.add(error);
-        return new ErrorMessageBean("006", HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase(), errors);
+        return new ErrorBean(HttpStatus.BAD_REQUEST, "006", errors);
     }
 
 }
