@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name", "category" }))
-@SuppressWarnings(DomainStr.UNUSED)
+@SuppressWarnings("unused")
 public class Subcategory extends Domain {
 
     private static Log logger = LogFactory.getLog(Subcategory.class);
@@ -59,7 +59,7 @@ public class Subcategory extends Domain {
 	public Subcategory() {}
 
     public Subcategory(String name, Category category) {
-        logger.info(DomainStr.CREATING + Subcategory.class);
+        logger.info("New object " + Subcategory.class);
         this.name = (name == null)? null : name.toUpperCase();
         this.category = category;
     }

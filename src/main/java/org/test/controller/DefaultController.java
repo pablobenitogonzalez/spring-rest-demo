@@ -18,7 +18,7 @@ public class DefaultController {
 	@RequestMapping("/**")
 	public void unmappedRequest(HttpServletRequest request) {
 		String uri = request.getRequestURI();
-		throw new ResourceNotFoundException(this.resourceBundle.getMessage("org.test.demo.message.no.resource.for.path",
+		throw new ResourceNotFoundException(this.resourceBundle.getMessage("org.test.demo.detail.no.resource.for.path",
 																		   new Object[]{uri}, Locale.getDefault()));
 	}
 }

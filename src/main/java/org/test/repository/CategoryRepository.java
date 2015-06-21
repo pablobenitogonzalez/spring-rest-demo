@@ -7,7 +7,7 @@ import org.test.domain.Subcategory;
 
 import java.util.List;
 
-@SuppressWarnings(RepositoryStr.UNUSED)
+@SuppressWarnings("unused")
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("select c from Category c order by c.name")

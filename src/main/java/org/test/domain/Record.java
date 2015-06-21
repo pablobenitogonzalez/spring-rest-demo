@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Embeddable
-@SuppressWarnings(DomainStr.UNUSED)
+@SuppressWarnings("unused")
 public class Record {
 
     @NotNull

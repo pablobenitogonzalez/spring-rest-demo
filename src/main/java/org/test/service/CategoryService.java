@@ -4,7 +4,7 @@ import org.test.domain.Category;
 
 import java.util.List;
 
-@SuppressWarnings(ServiceStr.UNUSED)
+@SuppressWarnings("unused")
 public interface CategoryService {
     public Category getCategory(Long id);
     public List<Category> getAllCategories();

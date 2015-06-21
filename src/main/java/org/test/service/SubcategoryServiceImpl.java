@@ -16,7 +16,7 @@ import java.util.Locale;
 
 @Service
 @Transactional
-@SuppressWarnings(ServiceStr.UNUSED)
+@SuppressWarnings("unused")
 public class SubcategoryServiceImpl implements SubcategoryService {
 
     @Autowired
@@ -27,12 +27,12 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
     public Subcategory getSubcategory(Long id) {
         if(id == null) {
-            throw new IllegalArgumentException(this.resourceBundle.getMessage("org.test.demo.message.subcategory.id.null",
+            throw new IllegalArgumentException(this.resourceBundle.getMessage("org.test.demo.detail.subcategory.id.null",
                     null, Locale.getDefault()));
         }
         Subcategory subcategory = subcategoryRepository.findOne(id);
         if(subcategory == null) {
-            throw new ResourceNotFoundException(this.resourceBundle.getMessage("org.test.demo.message.subcategory.not.found",
+            throw new ResourceNotFoundException(this.resourceBundle.getMessage("org.test.demo.detail.subcategory.not.found",
                     new Object[]{id}, Locale.getDefault()));
         }
         return subcategory;
@@ -44,7 +44,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
     public Subcategory createSubcategory(@NotNull @Valid Subcategory subcategory) {
         if(subcategoryRepository.findByNameAndCategory_Id(subcategory.getName(), subcategory.getCategory().getId()) != null)
-            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.message.subcategory.duplicate.key",
+            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.detail.subcategory.duplicate.key",
                     new Object[]{subcategory.getName(), subcategory.getCategory().getId()}, Locale.getDefault()));
         return subcategoryRepository.save(subcategory);
     }
@@ -56,7 +56,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
         }
         if(!(oldSubcategory.getName().equals(subcategory.getName()) && oldSubcategory.getId().equals(subcategory.getId()))
                 && subcategoryRepository.findByNameAndCategory_Id(subcategory.getName(), subcategory.getCategory().getId()) != null)
-            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.message.subcategory.duplicate.key",
+            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.detail.subcategory.duplicate.key",
                     new Object[]{subcategory.getName(), subcategory.getCategory().getId()}, Locale.getDefault()));
         subcategoryRepository.save(subcategory);
     }

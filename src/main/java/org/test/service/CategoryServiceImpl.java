@@ -17,7 +17,7 @@ import java.util.Locale;
 
 @Service
 @Transactional
-@SuppressWarnings(ServiceStr.UNUSED)
+@SuppressWarnings("unused")
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
@@ -28,12 +28,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category getCategory(Long id) {
         if(id == null) {
-            throw new IllegalArgumentException(this.resourceBundle.getMessage("org.test.demo.message.category.id.null",
+            throw new IllegalArgumentException(this.resourceBundle.getMessage("org.test.demo.detail.category.id.null",
                    null, Locale.getDefault()));
         }
         Category category = categoryRepository.findOne(id);
         if(category == null) {
-            throw new ResourceNotFoundException(this.resourceBundle.getMessage("org.test.demo.message.category.not.found",
+            throw new ResourceNotFoundException(this.resourceBundle.getMessage("org.test.demo.detail.category.not.found",
                     new Object[]{id}, Locale.getDefault()));
         }
         return category;
@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category createCategory(@NotNull @Valid Category category) {
         if(categoryRepository.findByName(category.getName()) != null) {
-            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.message.category.duplicate.key",
+            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.detail.category.duplicate.key",
                     new Object[]{category.getName()}, Locale.getDefault()));
         }
         return categoryRepository.save(category);
@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void updateCategory(@NotNull @Valid Category category) {
         Category oldCategory = this.getCategory(category.getId());
         if(!oldCategory.getName().equals(category.getName()) && categoryRepository.findByName(category.getName()) != null) {
-            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.message.category.duplicate.key",
+            throw new DuplicateKeyException(this.resourceBundle.getMessage("org.test.demo.detail.category.duplicate.key",
                     new Object[]{category.getName()}, Locale.getDefault()));
         }
         categoryRepository.save(category);
@@ -63,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long id) {
         Category category = this.getCategory(id);
         if(category.getSubcategories().size() > 0) {
-            throw new DataIntegrityViolationException(this.resourceBundle.getMessage("org.test.demo.message.category.data.integrity",
+            throw new DataIntegrityViolationException(this.resourceBundle.getMessage("org.test.demo.detail.category.data.integrity",
                     new Object[]{id}, Locale.getDefault()));
         }
         categoryRepository.delete(category);

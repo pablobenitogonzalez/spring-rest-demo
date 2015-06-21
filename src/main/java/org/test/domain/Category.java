@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name" }))
-@SuppressWarnings(DomainStr.UNUSED)
+@SuppressWarnings("unused")
 public class Category extends Domain {
 
     private static Log logger = LogFactory.getLog(Category.class);
@@ -60,7 +60,7 @@ public class Category extends Domain {
     public Category() {}
 
 	public Category(String name) {
-        logger.info(DomainStr.CREATING + Category.class);
+        logger.info("New object " + Category.class);
 		this.name = (name == null)? null : name.toUpperCase();
 	}
 
